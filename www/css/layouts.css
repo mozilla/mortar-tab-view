@@ -38,7 +38,9 @@ x-app {
   height: 100%;
 }
 x-view > header,
-x-listview > header {
+x-listview > header,
+x-view > footer,
+x-listview > footer {
   overflow: hidden;
   text-align: center;
   width: 100%;
@@ -71,7 +73,9 @@ x-listview > header .navitems.left {
   float: left;
 }
 x-view > header .navitems button,
-x-listview > header .navitems button {
+x-listview > header .navitems button,
+x-view > footer button,
+x-listview > footer button {
   height: 100%;
   margin-right: .5em;
   margin-left: 0;

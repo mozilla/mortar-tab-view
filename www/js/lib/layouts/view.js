@@ -4,6 +4,7 @@ define(function(require) {
     var _ = require('underscore');
     var Backbone = require('backbone');
     var Header = require('./header');
+    var Footer = require('./footer');
     var Stack = require('./stack');
     var stack = new Stack();
 
@@ -22,7 +23,9 @@ define(function(require) {
             var appEl = el.parent('x-app');
 
             var headerView = new Header(this.el, stack);
+            var footerView = new Footer(this.el, stack);
             var header = el.children('header').remove();
+            var footer = el.children('footer').remove();
 
             var contents = el.children();
             if(!contents.length) {
@@ -31,7 +34,9 @@ define(function(require) {
             else {
                 contents.wrapAll('<div class="contents"></div>');
             }
+
             el.prepend(header);
+            el.append(footer);
 
             this.onResize();
             
@@ -46,8 +51,9 @@ define(function(require) {
             // Width
             el.width(appEl.width());
 
-            // Height (minus the header)
-            var height = el.children('header').height();
+            // Height (minus the header and footer)
+            var height = (el.children('header').height() +
+                          el.children('footer').height());
             el.children('.contents').css({ height: appEl.height() - height });
 
             if(this.header) {

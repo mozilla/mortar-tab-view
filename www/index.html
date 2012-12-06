@@ -18,38 +18,48 @@
          through the marketpace (see app.js) -->
     <!-- <button id="install-btn">Install</button>     -->
 
-    <x-app>
-      <x-listview class="list" data-first="true">
-        <header>
-          <button class="refresh">Refresh</button>
-          <h1>My Items</h1>
-          <button class="add">+</button>
-        </header>
+    <x-view id="app">
+      <x-view class="home" data-first="true">
+        <x-view data-first="true">
+          <header>
+            <h1>Stuff</h1>
+          </header>
 
-        <footer>
-          <button data-view=".detail">Hello</button>
-          <button>Yes</button>
-        </footer>
-      </x-listview>
+          <p>Welcome to this app!</p>
 
-      <x-view class="detail">
-        <header>
-          <h1></h1>
-          <button data-view="x-view.edit">Edit</button>
-        </header>
-        
-        <h1 class="title"></h1>
-        <p class="desc"></p>
-        <p class="date"></p>
+          <p>You'll want to do these things:</p>
+          
+          <ul>
+            <li>foo1</li>
+            <li>foo2</li>
+          </ul>
+
+          <footer>
+            <button data-view=".list">List</button>
+          </footer>
+        </x-view>
+
+        <x-listview class="list">
+          <header>
+            <h1>Items</h1>
+          </header>
+        </x-listview>
       </x-view>
 
-      <x-view class="edit">
-        <h1>Edit</h1>
-        <div class="field">Title: <input type="text" name="title" /></div>
-        <div class="field">Description: <input type="text" name="desc" /></div>
-        <button type="submit" class="add">Add</button>
+      <x-view class="foo">
+        Foo
       </x-view>
-    </x-app>
+
+      <x-view class="bar">
+        Hello
+      </x-view>
+
+      <footer>
+        <button data-view=".home">Home</button>
+        <button data-view=".foo">foo</button>
+        <button data-view=".bar">bar</button>
+      </footer>
+    </x-view>
 
     <!-- Using require.js, a module system for javascript, include the
          js files. This loads "main.js", which in turn can load other

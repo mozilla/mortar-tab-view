@@ -19,29 +19,26 @@ html, body {
     cursor: pointer;
 }
 
-x-app {
+#app .contents {
     > x-view, > x-listview {
         background-color: white;
         position: absolute;
         top: 0;
         left: 0;
-        border-left: 1px solid black;
     }
 }
 
-x-app {
-    > x-view, > x-listview {
-        &.moving {
-            transition: left ease-in 0.15s;
-	        -o-transition: left ease-in 0.15s;
-	        -ms-transition: left ease-in 0.15s;
-	        -moz-transition: left ease-in 0.15s;
-	        -webkit-transition: left ease-in 0.15s;
-        }
+x-view, x-listview {
+    &.moving {
+        /* transition: left ease-in 0.15s; */
+	    /* -o-transition: left ease-in 0.15s; */
+	    /* -ms-transition: left ease-in 0.15s; */
+	    /* -moz-transition: left ease-in 0.15s; */
+	    /* -webkit-transition: left ease-in 0.15s; */
     }
 }
 
-x-app {
+#app .contents {
     display: block;
     width: 100%;
     height: 100%;
@@ -108,7 +105,9 @@ x-view, x-listview {
 
 x-view, x-listview {
     > .contents {
-        overflow: auto;
+        position: relative;
+        overflow-x: hidden;
+        overflow-y: auto;
     }
 }
 

@@ -2,24 +2,10 @@
 define(function(require) {
     var $ = require('zepto');
 
-    function Header(parent, stack) {
-        parent = $(parent);
-        this.stack = stack;
+    function Header(parent) {
+        this.parent = parent;
 
-        if(!parent.children('header').length) {
-            var first = parent.children().first();
-            var header = $('<header></header>');
-
-            if(first.is('h1')) {
-                first.wrap(header);
-            }
-            else {
-                el.prepend(header);
-                header.append('<h1>Section</h1>');
-            }
-        }
-
-        var el = $('header', parent);
+        var el = $(parent.el).children('header');
 
         // Wrap the items left and right of the `h1` title
         var h1 = $('h1', el)[0];
@@ -47,12 +33,10 @@ define(function(require) {
             el.append(rightWrapper);
         }
 
-        var _this = this;
         el.find('button').click(function() {
             if(this.dataset.view) {
                 var view = $(this.dataset.view).get(0);
-                view.model = parent.get(0).model;
-                _this.stack.push(view);
+                view.open(parent.model);
             }
         });
 
@@ -62,16 +46,20 @@ define(function(require) {
 
     Header.prototype.addBack = function() {
         var nav = $('.navitems.left', this.el);
-        var stack = this.stack;
+        var _this = this;
 
         if(!nav.children().length) {
             var back = $('<button class="back">Back</button>');
             nav.append(back);
 
             back.click(function() {
-                stack.pop();
+                _this.parent.close('slideRightOut');
             });
         }
+    };
+
+    Header.prototype.removeBack = function() {
+        $('.navitems.left button.back').remove();
     };
 
     Header.prototype.setTitle = function(text) {

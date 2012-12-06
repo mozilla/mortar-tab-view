@@ -1,10 +1,11 @@
 
 define(function(require) {
+    require('layouts/app');
+
     var $ = require('zepto');
     var _ = require('underscore');
     var Backbone = require('backbone');
     var view = require('./view');
-    var stack = view.stack;
     var Item = Backbone.Model.extend({});
     var ItemList = Backbone.Collection.extend({
         model: Item
@@ -13,6 +14,13 @@ define(function(require) {
     var ListView = view.BasicView.extend({
         initialize: function() {
             this.initMarkup();
+            this._stack = [];
+
+            var p = $(this.el).parents('x-view').get(0);
+            if(p) {
+                this.parent = p.view;
+            }
+
             this.collection.bind('add', _.bind(this.appendItem, this));
             this.collection.bind('reset', _.bind(this.render, this));
 
@@ -74,17 +82,20 @@ define(function(require) {
             var sel = opts.nextView || 'x-view.detail';
 
             var viewElement = $(sel).get(0);
-            viewElement.open(this.model);
+
+            if(viewElement) {
+                viewElement.open(this.model);
+            }
         }
     });
 
     xtag.register('x-listview', {
-        onInsert: function() {
+        onCreate: function() {
             this.view = new ListView({ el: this,
                                        collection: new ItemList() });
 
             if(this.dataset.first == 'true') {
-                stack.push(this);
+                this.view.open();
             }
         },
         getters: {
@@ -114,7 +125,7 @@ define(function(require) {
                 this.view.open(model);
             },
             close: function() {
-                stack.pop();
+                this.view.close();
             }
         }
     });

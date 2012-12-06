@@ -3,31 +3,43 @@ define(function(require) {
     var $ = require('zepto');
     var _ = require('underscore');
     var Backbone = require('backbone');
+    var anims = require('./anim');
     var Header = require('./header');
     var Footer = require('./footer');
-    var Stack = require('./stack');
-    var stack = new Stack();
+
+    var globalStack = [];
 
     var BasicView = Backbone.View.extend({
-        stack: {
-            'open': 'onOpen'
-        },
-
         initialize: function() {
+            this._stack = [];
+            
+            var p = $(this.el).parents('x-view').get(0);
+            if(p) {
+                this.parent = p.view;
+            }
+
             this.initMarkup();
         },
 
         initMarkup: function() {
             // TODO: clean this up and simplify expansion
             var el = $(this.el);
-            var appEl = el.parent('x-app');
 
-            var headerView = new Header(this.el, stack);
-            var footerView = new Footer(this.el, stack);
-            var header = el.children('header').remove();
-            var footer = el.children('footer').remove();
+            if(el.children('header').length) {
+                this.header = new Header(this);
+                el.children('header').remove();
+            }
 
-            var contents = el.children();
+            if(el.children('footer').length) {
+                this.footer = new Footer(this);
+                el.children('footer').remove();
+            }
+
+            // We need to manipulate all of the child nodes, including
+            // text nodes
+            var nodes = Array.prototype.slice.call(el[0].childNodes);
+            var contents = $(nodes);
+
             if(!contents.length) {
                 el.append('<div class="contents"></div>');
             }
@@ -35,26 +47,29 @@ define(function(require) {
                 contents.wrapAll('<div class="contents"></div>');
             }
 
-            el.prepend(header);
-            el.append(footer);
+            if(this.header) {
+                el.prepend(this.header.el);
+            }
+
+            if(this.footer) {
+                el.append(this.footer.el);
+            }
 
             this.onResize();
-            
-            headerView.setTitle(header.children('h1').text());
-            this.header = headerView;
         },
 
         onResize: function() {
             var el = $(this.el);
-            var appEl = el.parent('x-app');
-            
+            var appEl = el.parent();
+            var appHeight = appEl.height();
+
             // Width
             el.width(appEl.width());
 
             // Height (minus the header and footer)
             var height = (el.children('header').height() +
                           el.children('footer').height());
-            el.children('.contents').css({ height: appEl.height() - height });
+            el.children('.contents').css({ height: appHeight - height });
 
             if(this.header) {
                 this.header.setTitle(this.header.getTitle());
@@ -62,6 +77,10 @@ define(function(require) {
         },
 
         setTitle: function() {
+            if(!this.header) {
+                return;
+            }
+
             var titleField = this.options.titleField || 'title';
             var model = this.model;
             var text;
@@ -81,7 +100,33 @@ define(function(require) {
             this.header.setTitle(text);
         },
 
-        onOpen: function() {
+        open: function(model, anim) {
+            anim = anim || 'instant';
+            var stack = this.parent ? this.parent._stack : globalStack;
+
+            if(stack.indexOf(this.el) !== -1) {
+                // It's already in the stack, do nothing
+                return;
+            }
+
+            if(anims[anim]) {
+                anims[anim](this.el);
+            }
+            else {
+                console.log('WARNING: invalid animation: ' + anim);
+            }
+
+            if(stack.length && this.header) {
+                this.header.addBack(this);
+            }
+            else if(this.header) {
+                this.header.removeBack();
+            }
+
+            stack.push(this.el);
+            this.model = model;
+            this.setTitle();
+
             // This method fires when this view appears in the app, so bind
             // the render function to the current model's change event
             if(this.model) {
@@ -91,16 +136,31 @@ define(function(require) {
             this.render();
         },
 
-        open: function(model) {
+        openAlone: function(model, anim) {
+            anim = anim || 'instant';
+            anims[anim](this.el);
+
+            if(this.header) {
+                this.header.removeBack();
+            }
+
             this.model = model;
-            stack.push(this.el);
+            this.setTitle();
         },
 
-        close: function() {
+        close: function(anim) {
+            anim = anim || 'instantOut';
+            var stack = this.parent ? this.parent._stack : globalStack;
+            var lastIdx = stack.length - 1;
+
+            if(stack[lastIdx] == this.el) {
+                stack.pop();
+            }
+            
+            anims[anim](this.el);
             this.model = null;
-            stack.pop();
         },
-
+        
         render: function() {
             var model = this.model;
 
@@ -115,13 +175,13 @@ define(function(require) {
         }
     });
 
-    // TODO: see if I can get it to work with onCreate
     xtag.register('x-view', {
-        onInsert: function() {
+        onCreate: function() {
             this.view = new BasicView({ el: this });
 
+            var _this = this;
             if(this.dataset.first == 'true') {
-                stack.push(this);
+                this.view.open();
             }
         },
         getters: {
@@ -162,16 +222,15 @@ define(function(require) {
         // TODO: figure out better way to do this
         var els = 'x-view, x-listview';
         $(els).each(function() {
-            if(!stack.find(this)) {
-                $(this).css({ zIndex: 0 });
-            }
+            // if(!stack.find(this)) {
+            //     $(this).css({ zIndex: 0 });
+            // }
             
             this.view.onResize();
         });
     };
 
     return {
-        stack: stack,
         BasicView: BasicView
     };
 });

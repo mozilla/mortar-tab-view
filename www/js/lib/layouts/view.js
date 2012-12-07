@@ -7,17 +7,26 @@ define(function(require) {
     var Header = require('./header');
     var Footer = require('./footer');
 
-    var globalStack = [];
+    var globalObject = {
+        _stack: [],
+        stackSize: function() {
+            return globalObject._stack.length;
+        },
+        clearStack: function() {
+            var stack = globalObject._stack;
+
+            while(stack.length) {
+                stack[stack.length - 1].close();
+            }
+        }
+    };
 
     var BasicView = Backbone.View.extend({
         initialize: function() {
             this._stack = [];
             
             var p = $(this.el).parents('x-view').get(0);
-            if(p) {
-                this.parent = p.view;
-            }
-
+            this.parent = p ? p.view : globalObject;
             this.initMarkup();
         },
 
@@ -76,6 +85,18 @@ define(function(require) {
             }
         },
 
+        stackSize: function() {
+            return this._stack.length;
+        },
+
+        clearStack: function() {
+            var stack = this._stack;
+
+            while(stack.length) {
+                stack[stack.length - 1].close();
+            }
+        },
+
         setTitle: function() {
             if(!this.header) {
                 return;
@@ -102,7 +123,7 @@ define(function(require) {
 
         open: function(model, anim) {
             anim = anim || 'instant';
-            var stack = this.parent ? this.parent._stack : globalStack;
+            var stack = this.parent._stack;
 
             if(stack.indexOf(this.el) !== -1) {
                 // It's already in the stack, do nothing
@@ -150,7 +171,7 @@ define(function(require) {
 
         close: function(anim) {
             anim = anim || 'instantOut';
-            var stack = this.parent ? this.parent._stack : globalStack;
+            var stack = this.parent._stack;
             var lastIdx = stack.length - 1;
 
             if(stack[lastIdx] == this.el) {
@@ -177,11 +198,14 @@ define(function(require) {
 
     xtag.register('x-view', {
         onCreate: function() {
-            this.view = new BasicView({ el: this });
+            var view = this.view = new BasicView({ el: this });
 
-            var _this = this;
             if(this.dataset.first == 'true') {
-                this.view.open();
+                view.parent.clearStack();
+                view.open();
+            }
+            else if(!view.parent.stackSize()) {
+                view.open();
             }
         },
         getters: {

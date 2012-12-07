@@ -16,20 +16,12 @@ body {
   border-top: 1px solid grey;
   cursor: pointer;
 }
-#app .contents > x-view,
-#app .contents > x-listview {
+x-view,
+x-listview {
   background-color: white;
   position: absolute;
   top: 0;
   left: 0;
-}
-x-view.moving,
-x-listview.moving {
-  /* transition: left ease-in 0.15s; */
-  /* -o-transition: left ease-in 0.15s; */
-  /* -ms-transition: left ease-in 0.15s; */
-  /* -moz-transition: left ease-in 0.15s; */
-  /* -webkit-transition: left ease-in 0.15s; */
 }
 #app .contents {
   display: block;

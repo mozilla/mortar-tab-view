@@ -91,11 +91,15 @@ define(function(require) {
 
     xtag.register('x-listview', {
         onCreate: function() {
-            this.view = new ListView({ el: this,
-                                       collection: new ItemList() });
+            var view = this.view = new ListView({ el: this,
+                                                  collection: new ItemList() });
 
             if(this.dataset.first == 'true') {
-                this.view.open();
+                view.parent.clearStack();
+                view.open();
+            }
+            else if(!view.parent.stackSize()) {
+                view.open();
             }
         },
         getters: {

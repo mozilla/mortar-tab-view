@@ -31,7 +31,6 @@ define(function(require) {
         },
 
         initMarkup: function() {
-            // TODO: clean this up and simplify expansion
             var el = $(this.el);
 
             if(el.children('header').length) {
@@ -64,6 +63,13 @@ define(function(require) {
                 el.append(this.footer.el);
             }
 
+            // Position the view (not done in css because we don't
+            // want a "pop" when the page loads)
+            el.css({
+                position: 'absolute',
+                top: 0,
+                left: 0
+            });
             this.onResize();
         },
 
@@ -199,7 +205,7 @@ define(function(require) {
     xtag.register('x-view', {
         onCreate: function() {
             var view = this.view = new BasicView({ el: this });
-
+            
             if(this.dataset.first == 'true') {
                 view.parent.clearStack();
                 view.open();
@@ -243,13 +249,8 @@ define(function(require) {
     });
 
     window.onresize = function() {
-        // TODO: figure out better way to do this
         var els = 'x-view, x-listview';
         $(els).each(function() {
-            // if(!stack.find(this)) {
-            //     $(this).css({ zIndex: 0 });
-            // }
-            
             this.view.onResize();
         });
     };

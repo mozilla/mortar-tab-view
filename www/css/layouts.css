@@ -19,9 +19,6 @@ body {
 x-view,
 x-listview {
   background-color: white;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 #app .contents {
   display: block;
@@ -84,10 +81,8 @@ x-listview > .contents {
   overflow-x: hidden;
   overflow-y: auto;
 }
-header h1 {
-  position: absolute;
-  top: 0;
-  left: 0;
+x-view > header h1,
+x-listview > header h1 {
   margin: 0;
   margin-top: 4pt;
   padding: 0;

@@ -21,9 +21,6 @@ html, body {
 
 x-view, x-listview {
     background-color: white;
-    position: absolute;
-    top: 0;
-    left: 0;
 }
 
 #app .contents {
@@ -99,14 +96,13 @@ x-view, x-listview {
     }
 }
 
-header h1 {
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin: 0;
-    margin-top: 4pt;
-    padding: 0;
-    font-size: 2em;
-    line-height: 32pt;
-    text-align: center;
+x-view, x-listview {
+    > header h1 {
+        margin: 0;
+        margin-top: 4pt;
+        padding: 0;
+        font-size: 2em;
+        line-height: 32pt;
+        text-align: center;
+    }
 }

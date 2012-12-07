@@ -21,21 +21,24 @@ h1 {
     font: 2.2rem/4.8rem "Open Sans", Sans-serif;
 }
 
-.loading {
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    text-align: center;
-    margin-top: 5em;
-    color: #dddddd;
+x-view .contents {
+    padding: 1em;
+}
+
+x-listview .contents {
+    padding: 0;
 }
 
 x-view.foo {
-    background-color: green;
+    background-color: #aaffaa;
 }
 
 x-view.bar {
-    background-color: red;
+    background-color: #ffaaaa;
+}
+
+x-view .contents h1 {
+    margin: 0;
 }
 
 x-view.detail .contents, x-view.edit .contents {

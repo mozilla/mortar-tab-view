@@ -49,10 +49,11 @@ define(function(require) {
             var contents = $(nodes);
 
             if(!contents.length) {
-                el.append('<div class="contents"></div>');
+                el.append('<div class="_contents"><div class="contents"></div></div>');
             }
             else {
                 contents.wrapAll('<div class="contents"></div>');
+                el.children('.contents').wrap('<div class="_contents"></div>');
             }
 
             if(this.header) {
@@ -75,7 +76,14 @@ define(function(require) {
 
         onResize: function() {
             var el = $(this.el);
-            var appEl = el.parent();
+
+            // The parent element is the closest ._contents if exists,
+            // otherwise the immediate parent
+            var appEl = el.parents('._contents').first();            
+            if(!appEl.length) {
+                appEl = el.parent();
+            }
+
             var appHeight = appEl.height();
 
             // Width
@@ -84,7 +92,7 @@ define(function(require) {
             // Height (minus the header and footer)
             var height = (el.children('header').height() +
                           el.children('footer').height());
-            el.children('.contents').css({ height: appHeight - height });
+            el.children('._contents').css({ height: appHeight - height });
 
             if(this.header) {
                 this.header.setTitle(this.header.getTitle());
@@ -128,6 +136,9 @@ define(function(require) {
         },
 
         open: function(model, anim) {
+            // Open a view and push it on the parent view's navigation
+            // stack
+
             anim = anim || 'instant';
             var stack = this.parent._stack;
 
@@ -156,16 +167,30 @@ define(function(require) {
 
             // This method fires when this view appears in the app, so bind
             // the render function to the current model's change event
+            // TODO: could this add multiple even listeners, and
+            // should it be done in `openAlone` also?
             if(this.model) {
                 this.model.on('change', _.bind(this.render, this));
             }
 
             this.render();
+
+            if(this.onOpen) {
+                this.onOpen(this);
+            }
         },
 
         openAlone: function(model, anim) {
+            // Open a view but don't put it on the stack
+
             anim = anim || 'instant';
-            anims[anim](this.el);
+
+            if(anims[anim]) {
+                anims[anim](this.el);
+            }
+            else {
+                console.log('WARNING: invalid animation: ' + anim);
+            }
 
             if(this.header) {
                 this.header.removeBack();
@@ -173,6 +198,11 @@ define(function(require) {
 
             this.model = model;
             this.setTitle();
+            this.render();
+
+            if(this.onOpen) {
+                this.onOpen(this);
+            }
         },
 
         close: function(anim) {
@@ -236,14 +266,17 @@ define(function(require) {
             },
             model: function(model) {
                 this.view.model = model;
+            },
+            onOpen: function(func) {
+                this.view.onOpen = func;
             }
         },
         methods: {
-            open: function(model) {
-                this.view.open(model);
+            open: function(model, anim) {
+                this.view.open(model, anim);
             },
-            close: function() {
-                this.view.close();
+            close: function(anim) {
+                this.view.close(anim);
             }
         }
     });
@@ -255,7 +288,7 @@ define(function(require) {
         });
     };
 
-    return {
-        BasicView: BasicView
-    };
+    BasicView.globalObject = globalObject;
+
+    return BasicView;
 });

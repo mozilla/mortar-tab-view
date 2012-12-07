@@ -65,20 +65,17 @@ define(function(require) {
 
     function instant(node) {
         node = $(node);
-        node.css({
+        node.css(vendorized('transition', 'none', {
             left: 0,
             zIndex: zindex++
-        });
+        }));
     }
 
     function instantOut(node) {
         node = $(node);
-        var startLeft = node.width();
-
-        node.removeClass('moving');
-        node.css({
-            left: startLeft
-        });
+        node.css(vendorized('transition', 'none', {
+            left: node.width()
+        }));
     }
 
     function slideLeft(node) {

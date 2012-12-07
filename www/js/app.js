@@ -38,30 +38,11 @@ define(function(require) {
     list.add({ title: 'Make things',
                desc: 'Make this look like that',
                date: new Date(12, 9, 5) });
-    list.add({ title: 'Move stuff',
-               desc: 'Move this over there',
-               date: new Date(12, 10, 1) });
-    list.add({ title: 'Cook yummy food',
-               desc: 'COOK ALL THE THINGS',
-               date: new Date() });
-    list.add({ title: 'Make things',
-               desc: 'Make this look like that',
-               date: new Date(12, 9, 5) });
-    list.add({ title: 'Move stuff',
-               desc: 'Move this over there',
-               date: new Date(12, 10, 1) });
-    list.add({ title: 'Cook yummy food',
-               desc: 'COOK ALL THE THINGS',
-               date: new Date() });
-    list.add({ title: 'Make things',
-               desc: 'Make this look like that',
-               date: new Date(12, 9, 5) });
-    list.add({ title: 'Move stuff',
-               desc: 'Move this over there',
-               date: new Date(12, 10, 1) });
 
-    // $('button.add', list).click(function() {
-    //     edit.open();
-    // });
+    list.nextView = 'x-view.details';
     
+    var details = $('.details').get(0);
+    details.render = function(item) {
+        $('.title', this).text(item.get('title'));
+    };
 });

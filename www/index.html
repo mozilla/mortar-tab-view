@@ -20,9 +20,9 @@
 
     <div class="loading">Loading...</div>
 
-    <x-view id="app">
+    <x-view class="app" id="app">
       <x-view class="home">
-        <x-view>
+        <x-view class="homesub">
           <header>
             <h1>Stuff</h1>
           </header>
@@ -46,20 +46,44 @@
             <h1>Items</h1>
           </header>
         </x-listview>
+
+        <x-view class="details">
+          <header><h1>Details</h1></header>
+          
+          This item has the title "<span class="title"></span>"
+
+          <footer>
+            <button>Delete</button>
+          </footer>
+        </x-view>
       </x-view>
 
       <x-view class="foo">
-        Foo
+        <h1>Section #1</h1>
+        <p>
+          Embedded bleeding-edge extend global visualize rich aggregate
+          optimize, "synthesize rss-capable; value-added aggregate user-centred
+          incentivize proactive one-to-one." User-centered.
+        </p>
       </x-view>
 
       <x-view class="bar">
-        Hello
+        <h1>Section #2</h1>
+        <button>Press me!</button>
+        <p>
+          Platforms best-of-breed engineer visualize, standards-compliant
+          widgets niches, eyeballs integrated plug-and-play evolve reinvent
+          ubiquitous integrate engage; scale. Users clicks-and-mortar evolve
+          synergistic innovate, capture infomediaries supply-chains,
+          bleeding-edge unleash e-markets visionary, cross-platform, matrix
+          magnetic B2B next-generation.
+        </p>
       </x-view>
 
       <footer>
         <button data-view=".home">Home</button>
-        <button data-view=".foo">foo</button>
-        <button data-view=".bar">bar</button>
+        <button data-view=".foo">Section #1</button>
+        <button data-view=".bar">Section #2</button>
       </footer>
     </x-view>
 

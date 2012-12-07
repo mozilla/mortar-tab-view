@@ -44,7 +44,7 @@ define(function(require) {
         el.find('button').click(function() {
             if(this.dataset.view) {
                 var view = $(this.dataset.view).get(0);
-                view.open(parent.model);
+                view.open(parent.model, 'slideLeft');
             }
         });
 

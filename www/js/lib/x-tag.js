@@ -1,5 +1,5 @@
-(function(){
-  
+
+(function() {
   var doc = document,
     win = window,
     head = doc.getElementsByTagName('head')[0];
@@ -766,5 +766,4 @@
   else {
       win.xtag = xtag;
   }
-  
 })();

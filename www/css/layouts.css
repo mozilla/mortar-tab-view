@@ -98,3 +98,6 @@ x-listview > ._contents {
   overflow-x: hidden;
   overflow-y: auto;
 }
+x-listview .contents {
+  padding: 0;
+}

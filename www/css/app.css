@@ -25,32 +25,12 @@ x-view .contents {
     padding: 1em;
 }
 
-x-listview .contents {
-    padding: 0;
-}
-
 x-view.foo {
-    background-color: #aaffaa;
-}
-
-x-view.bar {
-    background-color: #ffaaaa;
+    background-color: #dddddd;
 }
 
 x-view .contents h1 {
     margin: 0;
-}
-
-x-view.detail .contents, x-view.edit .contents {
-    padding: 1em;
-}
-
-x-view.detail .contents h1 {
-    margin: 0;
-}
-
-x-view.edit .field {
-    margin-top: 1em;
 }
 
 x-listview.list li:before {

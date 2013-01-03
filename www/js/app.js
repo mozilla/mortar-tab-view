@@ -9,9 +9,8 @@ define(function(require) {
     // Installation button
     require('./install-button');
 
-    // Install the x-view and x-listview tags
-    require('layouts/view');
-    require('layouts/list');
+    // Install the layouts
+    require('layouts/layouts');
 
     // Write your app here.
 

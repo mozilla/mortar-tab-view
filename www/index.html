@@ -12,9 +12,12 @@
     <link rel="stylesheet" href="css/app.css">
   </head>
   <body>
-    <!-- Use this installation button to install locally without going
-         through the marketpace (see app.js) -->
-    <!-- <button id="install-btn">Install</button>     -->
+    <p>
+      <strong>Warning</strong>: the contents in this tempate are
+      deprected, and will soon be replaced by a much different
+      structure. Volo and several other things will be removed to offer
+      a simpler and more extensible template.
+    </p>
 
     <x-view id="app">
       <x-view class="home">
@@ -74,11 +77,19 @@
       </x-view>
 
       <x-view class="bar">
-        <h1>Section #2</h1>
-        <button>Press me!</button>
-        <p>
-          This is yet another section. The button above does nothing.
-        </p>
+        <x-listview id="list2">
+          <header>
+            <h1>Hello</h1>
+          </header>
+        </x-listview>
+
+        <x-view id="detail2">
+          <h1>Section #2</h1>
+          <button>Press me!</button>
+          <p>
+            This is yet another section. The button above does nothing.
+          </p>
+        </x-view>
       </x-view>
 
       <footer>

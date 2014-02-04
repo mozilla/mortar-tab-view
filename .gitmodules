@@ -1,0 +1,3 @@
+[submodule "www/js/lib/backbone"]
+	path = www/js/lib/backbone
+	url = git://github.com/documentcloud/backbone.git

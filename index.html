@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 
-    <title>Mortar Tabview</title>
+    <title>Mortar TabView</title>
     <meta name="description" content="A template with tabbed views">
     <meta name="viewport" content="width=device-width">
 
@@ -11,11 +11,16 @@
     <link rel="stylesheet" href="css/lib/brick-1.0.0.min.css">
   </head>
   <body>
+
     <x-layout>
+      
+      <x-appbar heading="Mortar TabView"></x-appbar>
+      
       <x-deck>
         <x-card id="cats">Cats</x-card>
         <x-card id="dogs">Dogs</x-card>
       </x-deck>
+      
       <x-tabbar>
         <x-tabbar-tab target-selector="#cats">
           Cats
@@ -24,6 +29,7 @@
           Dogs
         </x-tabbar-tab>
       </x-tabbar>
+
     </x-layout>
 
     <script src="js/lib/brick-1.0.0.min.js"></script>

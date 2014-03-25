@@ -18,9 +18,12 @@
   </head>
   <body>
 
+    <!--
+      An x-layout will ensure the content fills the screen, and if there are header and footer elements, that these stay locked to the top and bottom of the screen while the main content (in this case an x-deck instance) fills the rest of available space).
+    -->
     <x-layout>
       
-      <x-appbar heading="Mortar TabView"></x-appbar>
+      <x-appbar><h2>Mortar TabView</h2><button id="install">Install</button></x-appbar>
       
       <x-deck>
         <x-card id="card1">
@@ -57,6 +60,9 @@
     <script src="js/lib/deck.js"></script>
     <script src="js/lib/layout.js"></script>
     <script src="js/lib/tabbar.js"></script>
+
+    <script src="js/lib/AppInstall.js"></script>
+	
     <script src="js/app.js"></script>
   </body>
 </html>

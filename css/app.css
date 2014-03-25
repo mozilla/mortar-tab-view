@@ -14,6 +14,20 @@ h1 {
   margin: 0 0 1rem 0;
 }
 
+#install {
+  margin: 0.2rem;
+  background: #f00;
+  border: 1px solid;
+  padding: 0.2rem;
+  line-height: 1;
+  border-radius: 0.2rem;
+  font-size: 80%; 
+}
+
+#install:hover {
+  background: orange;
+}
+
 x-tabbar-tab[selected] {
   background: rgba(14, 115, 161, 1);
 }

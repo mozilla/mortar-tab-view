@@ -35,7 +35,7 @@ You'll need to use the IP address when using a physical device. Change the port 
 
 The `manifest.webapp` file contains metadata about the app, such as its name, description, icon and required permissions for running under Firefox OS.
 
-There really isn't much logic or behaviour baked into this template--it's more about demonstrating how to build an app using web components, and how to provide *Install* functionality, since this is a hosted web app.
+There really isn't much logic or behaviour baked into this template--it's more about demonstrating how to build an app using web components, and how to provide *Install* functionality, since this is a [hosted web app](https://developer.mozilla.org/en-US/Marketplace/Publishing/Publish_options#Hosted_apps).
 
 The **app layout** consists of a top level `x-layout` element which contains an `x-appbar`, an `x-deck` and a `x-tabbar`. To see this code in place, have a look at `index.html` and the comments.
 

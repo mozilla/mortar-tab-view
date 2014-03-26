@@ -28,6 +28,10 @@ h1 {
   background: orange;
 }
 
+.hidden {
+  display: none;
+}
+
 x-tabbar-tab[selected] {
   background: rgba(14, 115, 161, 1);
 }

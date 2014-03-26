@@ -1,6 +1,6 @@
 # TabView Template
 
-This template provides a basic tabbed view layout, using some web components from Brick.
+This template provides a basic tabbed view layout, using some web components from [Brick](https://github.com/mozilla/brick).
 
 This is part of the [mortar](https://github.com/mozilla/mortar/) template collection for building [Open Web Apps](https://developer.mozilla.org/en-US/Apps).
 
@@ -44,3 +44,31 @@ The **app logic** is defined in `js/app.js`. Here we first wait for the `DOMComp
 Then we get a handle to the `deck` and the `tabbar` so we can call methods on them. We select the first tab and show the first card in the deck.
 
 After that, we set up the installation functionality, which is associated to the `install` button. We're using a small library for dealing with installs; this library is in `js/lib/AppInstall.js` and is referenced in `index.html`, right before `js/app.js`, so that the code is available when we want to use it.
+
+## Getting help
+
+If you find something that doesn't quite work as you'd expect, we'd appreciate if you [filed a bug](https://github.com/mozilla/mortar-tabview/issues)!
+
+We need your help in order to help you. Therefore:
+
+1. Tell us which version of the template are you using. Where did you get the code from?
+* Specify the environment where the bug occurs i.e. which browser were you using, or which version of the Simulator or Firefox OS device. An example would be `Firefox 30.0a1 Nightly 20140210`. You can generally get this data from the *About* menu in your browser. Also maybe tell us if you have experimental features enabled in your browser (for example, support for web components).
+* Describe the problem in detail. What were you doing? What happened? What did you expect to happen?
+* Probably also provide a test case so we can see what is happening and try to reproduce the error.
+
+Ultimately it all boils down to the fact that if we can't reproduce it, we can't help you or fix it either.
+
+## Contributing
+
+Contributions are always welcome! If you want to collaborate, whether that is with a new feature or fixing a bug, we recommend you...
+
+1. Have a look at the [issue tracker](https://github.com/mozilla/mortar-tabview/issues) first--to make sure there isn't anyone working on that already.
+* If it's a new issue/feature, or no one is working on it already, fork the project in GitHub (you'll need an account if you don't have one yet).
+* Create the bug to let us know you want to work on this. That way we are aware of and can keep an eye on it, or maybe tell you that it is not a bug but an intended feature, and save you the hassle of working on something that is not needed.
+* Clone your fork to your computer (i.e. get the code onto your computer)
+* Make a new branch, and switch to that new branch
+* Do the changes you deem necessary
+* Push the branch to GitHub
+* Send a pull request
+
+To make your changes as easy to merge back onto the project as possible, you should only work on one feature per branch. That makes code review simpler and faster!

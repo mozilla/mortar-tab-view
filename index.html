@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 
-    <title>Mortar TabView</title>
+    <title>TabView template</title>
     <meta name="description" content="A template with tabbed views">
     <meta name="viewport" content="width=device-width">
 
@@ -23,10 +23,18 @@
     -->
     <x-layout>
       
-      <x-appbar><h2>Mortar TabView</h2><button id="install">Install</button></x-appbar>
+      <!-- The x-appbar will always be pinned to the top -->
+      <x-appbar><h2>TabView template</h2><button id="install">Install</button></x-appbar>
       
+      <!-- An x-deck will show only one of its children (which are x-card) at a time. You can select which one with the `show` method, or using the `selected-index` attribute -->
       <x-deck>
+        <!-- Since we set a different id for each card, we can later reference it from x-tabbar (see below) -->
         <x-card id="card1">
+          <!-- 
+            An x-card can contain any kind of HTML mark-up. Except, maybe, don't put an x-card inside an x-card!
+            In our case we will be showing different "minidocuments" in each card, but you could have totally different
+            content in each one.
+          -->
           <h1>Lorem ipsum</h1>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </x-card>
@@ -40,6 +48,11 @@
         </x-card>
       </x-deck>
       
+      <!-- The x-tabbar contains a series of x-tabbar-tab elements which, when selected, will attempt to
+        call `show` on the element that matches the value of the `target-selector` attribute.
+        We are using two different selectors to demonstrate this: The first two use id selectors (#card1 and #card2).
+        The third one uses a nth-child selector. Feel free to adapt to what your app might need.
+      -->
       <x-tabbar>
         <x-tabbar-tab target-selector="#card1">
           Lorem ipsum

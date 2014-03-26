@@ -37,7 +37,9 @@ The `manifest.webapp` file contains metadata about the app, such as its name, de
 
 There really isn't much logic or behaviour baked into this template--it's more about demonstrating how to build an app using web components, and how to provide *Install* functionality, since this is a hosted web app.
 
-The app logic is defined in `js/app.js`. Here we first wait for the `DOMComponentsLoaded` event to fire. This is so that we ensure that the web components are ready before using them.
+The **app layout** consists of a top level `x-layout` element which contains an `x-appbar`, an `x-deck` and a `x-tabbar`. To see this code in place, have a look at `index.html` and the comments.
+
+The **app logic** is defined in `js/app.js`. Here we first wait for the `DOMComponentsLoaded` event to fire. This is so that we ensure that the web components are ready before using them.
 
 Then we get a handle to the `deck` and the `tabbar` so we can call methods on them. We select the first tab and show the first card in the deck.
 

@@ -1,10 +1,24 @@
-var AppInstall = (function() {
+(function() {
+
+  // Mortar AppInstall version 0.0.2
+  var _window = {
+    'location': {
+      'host': 'example.com',
+      'protocol': 'http:',
+      'pathname': '/example'
+    },
+    'navigator': {}
+  };
+
+  function setupMockups(win) {
+    _window = win;
+  }
 
   function guessManifestPath() {
 
-    var loc = window.location;
+    var loc = _window.location;
 
-    var pathname = window.location.pathname;
+    var pathname = loc.pathname;
 
     if(pathname !== '/') {
       var parts = pathname.split('/');
@@ -26,13 +40,13 @@ var AppInstall = (function() {
 
 
   function isInstallable() {
-    return(navigator.mozApps !== undefined);
+    return(_window.navigator.mozApps !== undefined);
   }
 
 
   function isInstalled(manifestPath, callback) {
 
-    var request = navigator.mozApps.checkInstalled(manifestPath);
+    var request = _window.navigator.mozApps.checkInstalled(manifestPath);
 
     request.onerror = function() {
       callback('Error checking for installed app: ' + request.error.name);
@@ -49,7 +63,7 @@ var AppInstall = (function() {
 
   function install(manifestPath, callback) {
 
-    var installRequest = navigator.mozApps.install(manifestPath);
+    var installRequest = _window.navigator.mozApps.install(manifestPath);
 
     installRequest.onsuccess = function() {
       // No error
@@ -63,11 +77,20 @@ var AppInstall = (function() {
   }
 
 
-  return {
+  var AppInstall = {
+    isInstallable: isInstallable,
     guessManifestPath: guessManifestPath,
-    install: install,
     isInstalled: isInstalled,
-    isInstallable: isInstallable
+    install: install,
+    setupMockups: setupMockups
   };
 
-}());
+  if(typeof define === 'function' && define.amd) {
+    define(function() { return AppInstall; });
+  } else if(typeof module !== 'undefined' && module.exports) {
+    module.exports = AppInstall;
+  } else {
+    this.AppInstall = AppInstall;
+  }
+
+}).call(this);

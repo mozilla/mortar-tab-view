@@ -1,18 +1,27 @@
 (function() {
 
-  // Mortar AppInstall version 0.0.2
-  var _window = {
-    'location': {
+  // Mortar AppInstall version 0.0.3
+  var _window;
+  var isBrowser = this.hasOwnProperty('document');
+
+  if(isBrowser) {
+    _window = this;
+  } else {
+    _window = {
+      'location': {
       'host': 'example.com',
       'protocol': 'http:',
       'pathname': '/example'
-    },
-    'navigator': {}
-  };
+      },
+      'navigator': {}
+    };
+  }
+
 
   function setupMockups(win) {
     _window = win;
   }
+
 
   function guessManifestPath() {
 
@@ -94,3 +103,4 @@
   }
 
 }).call(this);
+
